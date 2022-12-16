@@ -184,7 +184,7 @@ public class Demo {
 		System.out.println(res);
 		
 		//下面是使用阿里的fastjson包解析。如果不需要，请使用自己的解析包
-//		JSONObject json=JSONObject.parseObject(res);
-//		System.out.println(json.getJSONObject("showapi_res_body"));
+		JSONObject json=JSONObject.parseObject(res);
+		System.out.println(json.getJSONObject("showapi_res_body"));
 	}
 }

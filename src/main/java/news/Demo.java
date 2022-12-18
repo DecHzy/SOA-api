@@ -1,5 +1,6 @@
 package news;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.show.api.ShowapiRequest;
 
@@ -13,7 +14,7 @@ public class Demo {
     public static void main(String[] args) throws Exception {
         Demo.newsList();
         System.out.println("分割线###########");
-        Demo.newsChannel();
+        //Demo.newsChannel();
     }
 
     /**
@@ -45,7 +46,7 @@ public class Demo {
         ShowapiRequest req = new ShowapiRequest("https://ali-news.showapi.com/newsList", appcode);
         byte b[] = req.addTextPara("channelId", "")
                 .addTextPara("channelName", "")
-                .addTextPara("title", "湖南")
+                .addTextPara("title", "") //TODO title
                 .addTextPara("page", "1")
                 .addTextPara("needContent", "0")
                 .addTextPara("needHtml", "0")
@@ -58,15 +59,19 @@ public class Demo {
         Iterator it = map.keySet().iterator();
         while (it.hasNext()) {
             Object k = it.next();
-            System.out.println(k + " " + map.get(k));
+            //System.out.println(k + " " + map.get(k));
         }
         //打印返回体
         String res = new String(b, "utf-8");
-        System.out.println(res);
+        //System.out.println(res);
         //下面是使用阿里的fastjson包解析。如果不需要，请使用自己的解析包
         JSONObject json = JSONObject.parseObject(res);
-        System.out.println("分割线-------------");
-        System.out.println(json.getJSONObject("showapi_res_body"));
+        //System.out.println(json.getJSONObject("showapi_res_body"));
+        JSONArray newsArray = json.getJSONObject("showapi_res_body").getJSONObject("pagebean").getJSONArray("contentlist");
+        for (Object o : newsArray) {
+            System.out.println(o);
+            System.out.println("----------");
+        }
     }
 }
 
